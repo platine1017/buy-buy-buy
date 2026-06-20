@@ -248,6 +248,11 @@ h2 {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  max-height: 176px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .quick-chip {
@@ -293,6 +298,11 @@ h2 {
   margin: 0;
   padding: 0;
   list-style: none;
+  max-height: 230px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 4px;
+  -webkit-overflow-scrolling: touch;
 }
 
 .quick-edit-item {
@@ -561,6 +571,14 @@ body.large-text .item-check {
   height: 68px;
 }
 
+body.large-text .quick-list {
+  max-height: 210px;
+}
+
+body.large-text .quick-edit-list {
+  max-height: 260px;
+}
+
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -681,5 +699,13 @@ body.large-text .item-check {
 
   .list-actions {
     justify-content: flex-start;
+  }
+
+  .quick-list {
+    max-height: 168px;
+  }
+
+  .quick-edit-list {
+    max-height: 220px;
   }
 }
