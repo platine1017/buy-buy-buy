@@ -221,6 +221,29 @@ h2 {
   font-weight: 800;
 }
 
+.action-button {
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid rgba(72, 77, 168, 0.24);
+  box-shadow: 0 8px 18px rgba(72, 77, 168, 0.14);
+}
+
+.edit-action {
+  background: linear-gradient(135deg, #f2e8ff, #dfd2ff);
+  color: #563a9c;
+}
+
+.reminder-action {
+  background: linear-gradient(135deg, #6aaef5, #8b73e8);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.52);
+}
+
+.clear-action {
+  background: linear-gradient(135deg, #ffe4f0, #f4c8ec);
+  color: #883d83;
+}
+
 .quick-list {
   display: flex;
   flex-wrap: wrap;
