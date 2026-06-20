@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>買買買</title>
+    <meta name="theme-color" content="#bda7f4">
+    <meta name="description" content="簡單好用的買買買購物清單">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="assets/icon-192.png">
+    <link rel="apple-touch-icon" href="assets/icon-192.png">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="app-header">
+        <div>
+          <p class="eyebrow">今天也要穩穩買</p>
+          <h1>買買買</h1>
+        </div>
+        <button class="icon-button" id="largeTextToggle" type="button" aria-pressed="false" aria-label="切換大字模式" title="切換大字模式">
+          大
+        </button>
+      </header>
+
+      <section class="quick-panel" aria-label="常買項目">
+        <div class="section-title">
+          <h2>常買</h2>
+          <button class="text-button" id="editQuickButton" type="button" aria-expanded="false">編輯</button>
+        </div>
+        <div class="quick-list" id="quickList"></div>
+        <div class="quick-editor" id="quickEditor" hidden>
+          <form class="quick-editor-form" id="quickForm" autocomplete="off">
+            <label for="quickInput">新增常買</label>
+            <div class="mini-input-row">
+              <input id="quickInput" name="quick" type="text" placeholder="例如：豆腐" maxlength="20">
+              <button type="submit">加入</button>
+            </div>
+          </form>
+          <ul class="quick-edit-list" id="quickEditList"></ul>
+        </div>
+      </section>
+
+      <section class="composer" aria-label="新增項目">
+        <form id="itemForm" autocomplete="off">
+          <label for="itemInput">要買什麼？</label>
+          <div class="input-row">
+            <input id="itemInput" name="item" type="text" placeholder="例如：雞蛋 12個" maxlength="40">
+            <button class="voice-button" id="voiceButton" type="button" aria-label="語音輸入" title="語音輸入">聽</button>
+            <button type="submit">加入</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="list-panel" aria-label="購物清單">
+        <div class="section-title">
+          <h2>清單</h2>
+          <div class="list-actions">
+            <span class="count-pill" id="remainingCount">0 樣未買</span>
+            <button class="text-button" id="reminderButton" type="button">提醒</button>
+            <button class="text-button" id="clearDoneButton" type="button">清掉已買</button>
+          </div>
+        </div>
+        <div class="empty-state" id="emptyState">
+          <strong>還沒有東西要買</strong>
+          <span>點常買項目，或在下面輸入。</span>
+        </div>
+        <ul class="shopping-list" id="shoppingList"></ul>
+      </section>
+    </main>
+
+    <div class="modal-backdrop" id="reminderModal" hidden>
+      <section class="reminder-dialog" role="dialog" aria-modal="true" aria-labelledby="reminderTitle">
+        <div class="section-title">
+          <h2 id="reminderTitle">買買買提醒</h2>
+          <button class="item-delete" id="closeReminderButton" type="button" aria-label="關閉提醒">×</button>
+        </div>
+        <p class="reminder-summary" id="reminderSummary">目前沒有未買項目。</p>
+        <ul class="reminder-list" id="reminderList"></ul>
+        <p class="reminder-note" id="notificationStatus">安裝成 App 後，Android Chrome 通知會更穩。</p>
+        <div class="reminder-actions">
+          <button type="button" data-remind-minutes="30">30 分鐘</button>
+          <button type="button" data-remind-minutes="60">1 小時</button>
+          <button type="button" data-remind-minutes="180">3 小時</button>
+          <button type="button" id="cancelReminderButton">取消定時</button>
+        </div>
+      </section>
+    </div>
+
+    <div class="app-alert" id="appAlert" role="status" aria-live="polite" hidden>
+      <div class="app-alert-title" id="appAlertTitle">買買買提醒</div>
+      <div class="app-alert-body" id="appAlertBody"></div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
