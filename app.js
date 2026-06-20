@@ -100,10 +100,11 @@ function createItem(text) {
   };
 }
 
-function addItem(rawText) {
+function addItem(rawText, options = {}) {
+  const { focusAfterAdd = true } = options;
   const text = rawText.trim().replace(/\s+/g, " ");
   if (!text) {
-    input.focus();
+    if (focusAfterAdd) input.focus();
     return;
   }
 
@@ -111,7 +112,7 @@ function addItem(rawText) {
   saveItems();
   render();
   input.value = "";
-  input.focus();
+  if (focusAfterAdd) input.focus();
   showToast(`已加入：${text}`);
 }
 
@@ -207,7 +208,7 @@ function renderQuickItems() {
     button.className = "quick-chip";
     button.type = "button";
     button.textContent = text;
-    button.addEventListener("click", () => addItem(text));
+    button.addEventListener("click", () => addItem(text, { focusAfterAdd: false }));
     quickList.append(button);
 
     const row = document.createElement("li");
