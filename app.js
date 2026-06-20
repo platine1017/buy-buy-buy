@@ -36,6 +36,9 @@ const cancelReminderButton = document.querySelector("#cancelReminderButton");
 const reminderSummary = document.querySelector("#reminderSummary");
 const reminderList = document.querySelector("#reminderList");
 const notificationStatus = document.querySelector("#notificationStatus");
+const clockHelperText = document.querySelector("#clockHelperText");
+const openTimerButton = document.querySelector("#openTimerButton");
+const openClockButton = document.querySelector("#openClockButton");
 const appAlert = document.querySelector("#appAlert");
 const appAlertTitle = document.querySelector("#appAlertTitle");
 const appAlertBody = document.querySelector("#appAlertBody");
@@ -49,6 +52,7 @@ let alertTimer;
 let recognition;
 let isListening = false;
 let serviceWorkerRegistration;
+let selectedReminderMinutes = 30;
 
 function loadItems() {
   try {
@@ -296,6 +300,10 @@ function formatReminderLabel(minutes) {
   return `${minutes} 分鐘`;
 }
 
+function reminderSeconds(minutes = selectedReminderMinutes) {
+  return minutes * 60;
+}
+
 function reminderMessage() {
   const remainingItems = activeItems();
   if (!remainingItems.length) return "目前沒有未買項目，可以安心收工。";
@@ -358,6 +366,7 @@ function openReminderModal() {
     reminderList.append(row);
   });
 
+  clockHelperText.textContent = `想更穩，可以順手用手機時鐘設 ${formatReminderLabel(selectedReminderMinutes)} 倒數。`;
   reminderModal.hidden = false;
   closeReminderButton.focus();
 }
@@ -367,6 +376,7 @@ function closeReminderModal() {
 }
 
 async function setReminder(minutes) {
+  selectedReminderMinutes = minutes;
   const browserNotificationReady = await requestNotificationPermission();
   const message = reminderMessage();
   const dueAt = Date.now() + minutes * 60 * 1000;
@@ -386,6 +396,34 @@ async function setReminder(minutes) {
   } else {
     refreshNotificationStatus();
   }
+}
+
+function openAndroidIntent(intentUrl, fallbackMessage) {
+  try {
+    window.location.href = intentUrl;
+  } catch {
+    showToast(fallbackMessage);
+  }
+
+  setTimeout(() => {
+    showAppAlert("手機時鐘提醒", fallbackMessage);
+  }, 700);
+}
+
+function openTimerApp() {
+  const label = formatReminderLabel(selectedReminderMinutes);
+  const message = `請在手機時鐘裡設 ${label} 倒數。`;
+  const seconds = reminderSeconds();
+  const encodedMessage = encodeURIComponent("買買買提醒");
+  const intentUrl = `intent:#Intent;action=android.intent.action.SET_TIMER;S.android.intent.extra.alarm.MESSAGE=${encodedMessage};i.android.intent.extra.alarm.LENGTH=${seconds};B.android.intent.extra.alarm.SKIP_UI=false;end`;
+  openAndroidIntent(intentUrl, message);
+}
+
+function openClockApp() {
+  const label = formatReminderLabel(selectedReminderMinutes);
+  const message = `請在手機時鐘裡設 ${label} 倒數。`;
+  const intentUrl = "intent:#Intent;action=android.intent.action.SHOW_ALARMS;end";
+  openAndroidIntent(intentUrl, message);
 }
 
 function cancelReminder() {
@@ -514,9 +552,15 @@ reminderModal.addEventListener("click", (event) => {
 
 document.querySelectorAll("[data-remind-minutes]").forEach((button) => {
   button.addEventListener("click", () => {
-    setReminder(Number(button.dataset.remindMinutes));
+    const minutes = Number(button.dataset.remindMinutes);
+    selectedReminderMinutes = minutes;
+    setReminder(minutes);
   });
 });
+
+openTimerButton.addEventListener("click", openTimerApp);
+
+openClockButton.addEventListener("click", openClockApp);
 
 quickForm.addEventListener("submit", (event) => {
   event.preventDefault();

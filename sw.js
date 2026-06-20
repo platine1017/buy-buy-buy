@@ -1,4 +1,4 @@
-const CACHE_NAME = "buy-buy-buy-v2";
+const CACHE_NAME = "buy-buy-buy-v3";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -7,7 +7,8 @@ const APP_SHELL = [
   "./manifest.webmanifest",
   "./assets/wisteria-bg.png",
   "./assets/icon-192.png",
-  "./assets/icon-512.png"
+  "./assets/icon-512.png",
+  "./assets/fonts/jf-openhuninn-2.1.ttf"
 ];
 
 self.addEventListener("install", (event) => {

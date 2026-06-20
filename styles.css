@@ -1,3 +1,11 @@
+@font-face {
+  font-display: swap;
+  font-family: "OpenHuninn";
+  font-style: normal;
+  font-weight: 400 900;
+  src: url("assets/fonts/jf-openhuninn-2.1.ttf") format("truetype");
+}
+
 :root {
   color-scheme: light;
   --bg: #edf6ff;
@@ -20,7 +28,7 @@
   --panel-border-pattern:
     repeating-linear-gradient(45deg, rgba(105, 72, 190, 0.34) 0 9px, transparent 9px 18px),
     repeating-linear-gradient(-45deg, rgba(65, 151, 224, 0.36) 0 8px, transparent 8px 18px);
-  font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", Arial, sans-serif;
+  font-family: "OpenHuninn", "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", Arial, sans-serif;
 }
 
 * {
@@ -570,6 +578,37 @@ body.large-text .item-check {
   font-size: 0.92rem;
   font-weight: 800;
   line-height: 1.35;
+}
+
+.clock-helper {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 14px;
+  border-radius: 8px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.clock-helper-text {
+  color: var(--muted);
+  font-size: 0.95rem;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.clock-helper-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.clock-helper-actions button {
+  min-height: 48px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f0e9ff, #e5f4ff);
+  color: var(--accent-dark);
+  font-weight: 900;
 }
 
 .reminder-list {
